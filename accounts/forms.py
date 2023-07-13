@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+# from django import forms 
+# TODO get email to be required
 
 User = get_user_model()
 
