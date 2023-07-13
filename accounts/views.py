@@ -6,10 +6,12 @@ from .forms import RegistrationForm
 
 # Create your views here.
 def users(request):
-    return render(request, 'accounts/users.html') # TODO pass in values for list of users
+    # TODO pass in values for list of users
+    return render(request, 'accounts/users.html')
 
 def profile(request, username):
-    return render(request, 'accounts/profile.html', {'username': username}) # TODO construct profile.html and pass in values
+    # TODO construct profile.html and pass in values
+    return render(request, 'accounts/profile.html', {'username': username})
 
 def register(request):
     if request.user.is_authenticated:
@@ -20,9 +22,14 @@ def register(request):
 
         if form.is_valid():
             new_user = form.save()
-            new_user = authenticate(username=request.POST['username'], password=request.POST['password'])
+            new_user = authenticate (
+                username=request.POST['username'], 
+                password=request.POST['password1']
+            )
             login(request, new_user)
             return redirect(reverse('feed:feed'))
+        else:
+            return redirect(reverse('feed:feed')) # TODO return back to register view but with err
     else:
         form = RegistrationForm()
         return render(request, 'registration/register.html', {'form': form})

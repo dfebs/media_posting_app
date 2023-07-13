@@ -1,0 +1,5 @@
+select = ["E", "F", "ISC", "N"]
+exclude = [
+    "**/migrations",
+    "**/settings.py"
+]
