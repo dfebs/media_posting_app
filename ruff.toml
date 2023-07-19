@@ -1,4 +1,4 @@
-select = ["E", "F", "ISC", "N"]
+select = ["E", "F", "ISC", "N", "B"]
 exclude = [
     "**/migrations",
     "**/settings.py"
