@@ -1,5 +1,9 @@
-select = ["E", "F", "ISC", "N", "B"]
+
+select = ["E", "F", "ISC", "N", "B", "Q"]
 exclude = [
     "**/migrations",
     "**/settings.py"
 ]
+
+[flake8-quotes]
+inline-quotes = "single"

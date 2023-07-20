@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -10,8 +10,8 @@ from .models import UserProfile, User
 
 
 def users(request):
-    # TODO pass in values for list of users
-    return render(request, 'accounts/users.html')
+    profiles = get_list_or_404(UserProfile)
+    return render(request, 'accounts/users.html', {'profiles': profiles})
 
 def profile(request, name):
     # TODO construct profile.html and pass in values
@@ -43,7 +43,7 @@ def register(request):
             login(request, new_user) # TODO create a user profile model on new register
             profile = UserProfile(
                 user=new_user, 
-                description="This is the default bio",
+                description='This is the default bio',
                 picture=str(Path.joinpath(settings.MEDIA_ROOT, 'default/profile.png'))
                 )
             profile.save()
