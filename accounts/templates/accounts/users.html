@@ -5,8 +5,9 @@
 <p>We out here at accounts</p>
 
 {% for profile in profiles %}
-<p>{{ profile.user.username }}</p>
-<!-- TODO make hrefs to user profiles -->
+<a href="{% url 'profile' name=profile.user.username %}">
+    {{ profile.user.username }}
+</a>
 {% endfor %}
 
 {% endblock %}
