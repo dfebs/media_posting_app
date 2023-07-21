@@ -3,13 +3,13 @@ This repository is a practice application that is under construction. It is an a
 
 Here is a list of things I plan to do, or have done, with this project:
 - [x] Basic login/logout system
-- [] Make posts with images
-- [] Follow users and see their posts
-- [] Make comments on posts
+- [ ] Make posts with images
+- [ ] Follow users and see their posts
+- [ ] Make comments on posts
 - [x] See all users
 - [x] See user profiles
-- [] Edit own user profile
-- [] Remember the rest of things I want to do
+- [ ] Edit own user profile
+- [ ] Remember the rest of things I want to do
 
 For the curious, this can be run by 
 1. Creating a virtual environment and activating it
