@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.conf import settings
-from pathlib import Path
 from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm, ProfileForm
@@ -11,7 +9,6 @@ from .models import UserProfile, User
 
 
 def users(request):
-    #profiles = get_list_or_404(UserProfile)
     profiles = UserProfile.objects.all()
     return render(request, 'accounts/users.html', {'profiles': profiles})
 

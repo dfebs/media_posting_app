@@ -3,13 +3,13 @@ from django.conf import settings
 # Create your models here.
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    image = models.ImageField()
+    date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='posts')
     text = models.TextField(max_length=50)
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     text = models.TextField(max_length=25)
 

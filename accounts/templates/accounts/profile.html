@@ -4,10 +4,10 @@
 
     {% load static %}
     <!-- TODO fix issue where default profile picture doesnt show up. Maybe have new random image created for profiles -->
-    <img src="{{ profile.picture.url }}" alt="{{ username }} profile picture">
-
+    <img src="{{ profile.picture.url }}" alt="{{ profile.user.username }} profile picture" style="max-width:480px; max-height:480px;" />
+    <h1>{{ profile.user.username }}</h1>
+    <p>Date Joined: {{ profile.user.date_joined }}</p>
     <p>{{ profile.description }}</p>
-    <p>I'm a profile GAMER! My username is {{ profile.user.username }}</p>
 
     {% if viewing_username == profile.user.username  %}
         <a class="btn btn-primary" href="{% url 'edit_profile' %}" role="button">Edit Profile</a>
