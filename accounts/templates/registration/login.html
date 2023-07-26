@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 
   {% block content %}
-  <form action="{% url 'register' %}" method="post" class="form">
+  <form action="{% url 'login' %}" method="POST" class="form">
     {% csrf_token %}
   
     {% bootstrap_form form %}

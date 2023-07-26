@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block content %}
-{% load static %}
 
-<img src="{% static 'profile.png' %}" alt="{{ username }} profile picture">
-<p>{{ profile.description }}</p>
-<p>I'm a profile GAMER! My username is {{ username }}</p>
+    {% load static %}
+    <!-- TODO fix issue where default profile picture doesnt show up. Maybe have new random image created for profiles -->
+    <img src="{{ profile.picture.url }}" alt="{{ username }} profile picture">
+
+    <p>{{ profile.description }}</p>
+    <p>I'm a profile GAMER! My username is {{ profile.user.username }}</p>
+
+    {% if viewing_username == profile.user.username  %}
+        <a class="btn btn-primary" href="{% url 'edit_profile' %}" role="button">Edit Profile</a>
+    {% endif %}
+    
+
 {% endblock %}

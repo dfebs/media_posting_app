@@ -4,23 +4,44 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.conf import settings
 from pathlib import Path
+from django.contrib.auth.decorators import login_required
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ProfileForm
 from .models import UserProfile, User
 
 
 def users(request):
-    profiles = get_list_or_404(UserProfile)
+    #profiles = get_list_or_404(UserProfile)
+    profiles = UserProfile.objects.all()
     return render(request, 'accounts/users.html', {'profiles': profiles})
 
 def profile(request, name):
     # TODO construct profile.html and pass in values
     user = get_object_or_404(User, username=name)
     profile = get_object_or_404(UserProfile, user=user)
+    viewing_username = request.user.username
     return render(request, 'accounts/profile.html', {
-        'username': user.username, 
-        'profile': profile
+        'profile': profile,
+        'viewing_username': viewing_username
         })
+
+@login_required
+def edit_profile(request):
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid(): # TODO enforce image sizes
+            profile_to_edit = form.save(commit=False)
+            profile_to_edit.user = request.user
+            profile_to_edit.save()
+            return redirect(reverse('profile', kwargs={ 
+                'name': request.user.username 
+            }))
+    else:
+        form = ProfileForm(instance=user_profile)
+    
+    return render(request, 'accounts/edit_profile.html', { 'form': form })
+
 
 def log_out(request):
     logout(request)
@@ -29,7 +50,7 @@ def log_out(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect(reverse('feed:feed'))
+        return redirect(reverse('feed'))
     
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -44,7 +65,7 @@ def register(request):
             profile = UserProfile(
                 user=new_user, 
                 description='This is the default bio',
-                picture=str(Path.joinpath(settings.MEDIA_ROOT, 'default/profile.png'))
+                picture='pfp/default/profile.png'
                 )
             profile.save()
 

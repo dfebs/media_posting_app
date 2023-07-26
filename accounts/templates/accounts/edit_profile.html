@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <form action="{% url 'register' %}" method="POST" class="form">
+  <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data" class="form">
     {% csrf_token %}
   
     {% bootstrap_form form %}

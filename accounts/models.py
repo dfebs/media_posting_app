@@ -9,4 +9,4 @@ class User(AbstractUser):
 class UserProfile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
-    picture = models.ImageField()
+    picture = models.ImageField(upload_to='pfp')
