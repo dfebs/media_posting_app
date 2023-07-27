@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -28,4 +28,15 @@ def add_post(request):
         messages.success(request, 'You have successfully created your post')
     else:
         messages.error(request, 'There was a problem creating your post')
+    return redirect(reverse('feed'))
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, 'You cannot delete this post.')
+        return redirect(reverse('feed'))
+    
+    post.delete()
+    messages.success(request, 'You have successfully deleted your post')
     return redirect(reverse('feed'))

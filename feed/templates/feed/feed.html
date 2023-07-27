@@ -28,6 +28,10 @@
         <h1>{{ post.author.username }}</h1>
         <h2>{{ post.date }}</h2>
         <p>{{ post.text }}</p>
+        {% if request.user == post.author %}
+            <a class="btn btn-danger" href="{% url 'delete_post' post_id=post.id %}" role="button">Delete Post</a>
+        {% endif %}
+        
     </div>
 {% endfor %}
 

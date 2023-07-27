@@ -7,10 +7,11 @@ Here is a list of things I plan to do, or have done, with this project:
 - [ ] Follow users and see only their posts
 - [ ] Make comments on posts
 - [ ] Make reactions on posts (ideally with ajax)
-- [ ] Delete your own posts
+- [x] Delete your own posts
 - [x] See all listed users
 - [x] See user profiles
 - [x] Edit own user profile
+- [ ] Full email authentication
 - [ ] Remember the rest of things I want to do
 
 Nice to haves
