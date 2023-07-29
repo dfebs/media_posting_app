@@ -32,6 +32,30 @@
             <a class="btn btn-danger" href="{% url 'delete_post' post_id=post.id %}" role="button">Delete Post</a>
         {% endif %}
         
+        <div class="card card-body">
+            {% for comment in post.comment_set.all %}
+                <h2>{{ comment.author }}</h2>
+                <p>{{ comment.date }}</p>
+                <p>{{ comment.text }}</p>
+            {% endfor %}
+        </div>
+
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#createComment{{ post.id }}" role="button" aria-expanded="false" aria-controls="createPost">
+            Add Comment
+        </a>
+
+        <div class="collapse" id="createComment{{ post.id }}">
+            <div class="card card-body">
+                <form action="{% url 'add_comment' post_id=post.id %}" method="POST" class="form">
+                    {% csrf_token %}
+                  
+                    {% bootstrap_form add_comment_form %}
+                  
+                    {% bootstrap_button button_type="submit" content="OK" %}
+                  </form>
+            </div>
+        </div>
+        
     </div>
 {% endfor %}
 

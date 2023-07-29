@@ -1,21 +1,23 @@
 # Media Posting App with Django
 This repository is a practice application that is under construction. It is an attempt at learning the Django library from top to bottom.
 
-Here is a list of things I plan to do, or have done, with this project:
+## Current features
 - [x] Basic login/logout system
 - [x] Make posts with images
-- [ ] Follow users and see only their posts
-- [ ] Make comments on posts
-- [ ] Make reactions on posts (ideally with ajax)
+- [x] Make comments on posts
 - [x] Delete your own posts
 - [x] See all listed users
 - [x] See user profiles
 - [x] Edit own user profile
-- [ ] Full email authentication
-- [ ] Remember the rest of things I want to do
 
-Nice to haves
+## Features planned
+- [ ] Follow users and see only their posts
+- [ ] Make reactions on posts (ideally with ajax)
+- [ ] Full email authentication
+
+## Nice to haves
 - [ ] Have feed update on-the-fly when a different user makes a post
+- [ ] Lazy loading posts
 
 For the curious, this can be run by 
 1. Creating a virtual environment and activating it

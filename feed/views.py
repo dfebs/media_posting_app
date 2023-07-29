@@ -3,18 +3,22 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.template.defaulttags import register
 
-from .models import Post
-from .forms import AddPostForm
+from .models import Post, Comment
+from .forms import AddPostForm, AddCommentForm
 
 def feed(request):
     # Get all posts for now. TODO: Make posts only show for who you're following
     posts = Post.objects.all().order_by('-date')
+    comments = Comment.objects.all().order_by('-date')
 
     add_post_form = AddPostForm()
+    add_comment_form = AddCommentForm()
     return render(request, 'feed/feed.html', { 
-            'posts': posts, 
-            'add_post_form': add_post_form 
+            'posts': posts,
+            'add_post_form': add_post_form,
+            'add_comment_form': add_comment_form
         })
 
 @login_required
@@ -28,6 +32,22 @@ def add_post(request):
         messages.success(request, 'You have successfully created your post')
     else:
         messages.error(request, 'There was a problem creating your post')
+    return redirect(reverse('feed'))
+
+@login_required
+@require_POST
+def add_comment(request, post_id):
+    parent_post = get_object_or_404(Post, pk=post_id)
+    form = AddCommentForm(request.POST, request.FILES)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.post = parent_post
+        comment.save()
+        messages.success(request, 'You have successfully created your comment')
+    else:
+        messages.error(request, 'There was a problem creating your comment')
     return redirect(reverse('feed'))
 
 @login_required
