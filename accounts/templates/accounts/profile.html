@@ -11,6 +11,12 @@
 
     {% if viewing_username == profile.user.username  %}
         <a class="btn btn-primary" href="{% url 'edit_profile' %}" role="button">Edit Profile</a>
+    {% else %}
+            {% if not follow_relationship %}
+                <a class="btn btn-primary" href="{% url 'follow_user' user_id=profile.user.id %}" role="button">Follow</a>
+            {% else %}
+                <a class="btn btn-primary" href="{% url 'unfollow_user' user_id=profile.user.id %}" role="button">Unfollow</a>
+            {% endif %}
     {% endif %}
     
 

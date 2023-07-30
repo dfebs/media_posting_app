@@ -8,5 +8,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('users/<name>/', views.profile, name='profile'),
     path('users/', views.users, name='users'),
-    path('edit_profile', views.edit_profile, name='edit_profile')
+    path('follow_user/<user_id>/', views.follow_user, name='follow_user'),
+    path('unfollow_user/<user_id>/', views.unfollow_user, name='unfollow_user'),
+    path('edit_profile/', views.edit_profile, name='edit_profile')
 ]

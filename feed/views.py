@@ -1,17 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.template.defaulttags import register
 
-from .models import Post, Comment
+from .models import Post
 from .forms import AddPostForm, AddCommentForm
 
 def feed(request):
     # Get all posts for now. TODO: Make posts only show for who you're following
     posts = Post.objects.all().order_by('-date')
-    comments = Comment.objects.all().order_by('-date')
 
     add_post_form = AddPostForm()
     add_comment_form = AddCommentForm()
