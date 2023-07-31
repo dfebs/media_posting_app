@@ -3,60 +3,68 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-
-<p>This is where posts show up and where you can make your own posts (if you log in)</p>
-
-
-<a class="btn btn-primary" data-bs-toggle="collapse" href="#createPost" role="button" aria-expanded="false" aria-controls="createPost">
-    Add Post
-</a>
-<div class="collapse" id="createPost">
-    <div class="card card-body">
-        <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data" class="form">
-            {% csrf_token %}
-          
-            {% bootstrap_form add_post_form %}
-          
-            {% bootstrap_button button_type="submit" content="OK" %}
-          </form>
+<div class="container">
+    {% if not posts %}
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Your feed is empty!</h1>
+        <p class="col-md-8 fs-4">Go <a href="{% url 'users' %}">follow</a> some people or make a post.</p>
+        </div>
     </div>
-</div>
+    {% endif %}
 
-{% for post in posts %}
-    <div class="card card-body">
-        <img src="{{ post.image.url }}" alt="Post Image" style="max-width:480px; max-height:480px;" />
-        <h1>{{ post.author.username }}</h1>
-        <h2>{{ post.date }}</h2>
-        <p>{{ post.text }}</p>
-        {% if request.user == post.author %}
-            <a class="btn btn-danger" href="{% url 'delete_post' post_id=post.id %}" role="button">Delete Post</a>
-        {% endif %}
-        
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#createPost" role="button" aria-expanded="false" aria-controls="createPost">
+        Add Post
+    </a>
+
+    <div class="collapse" id="createPost">
         <div class="card card-body">
-            {% for comment in post.comment_set.all %}
-                <h2>{{ comment.author }}</h2>
-                <p>{{ comment.date }}</p>
-                <p>{{ comment.text }}</p>
-            {% endfor %}
+            <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data" class="form">
+                {% csrf_token %}
+            
+                {% bootstrap_form add_post_form %}
+            
+                {% bootstrap_button button_type="submit" content="OK" %}
+            </form>
         </div>
-
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#createComment{{ post.id }}" role="button" aria-expanded="false" aria-controls="createPost">
-            Add Comment
-        </a>
-
-        <div class="collapse" id="createComment{{ post.id }}">
-            <div class="card card-body">
-                <form action="{% url 'add_comment' post_id=post.id %}" method="POST" class="form">
-                    {% csrf_token %}
-                  
-                    {% bootstrap_form add_comment_form %}
-                  
-                    {% bootstrap_button button_type="submit" content="OK" %}
-                  </form>
-            </div>
-        </div>
-        
     </div>
-{% endfor %}
+
+    {% for post in posts %}
+        <div class="card card-body">
+            <img src="{{ post.image.url }}" alt="Post Image" style="max-width:480px; max-height:480px;" />
+            <h1>{{ post.author.username }}</h1>
+            <h2>{{ post.date }}</h2>
+            <p>{{ post.text }}</p>
+            {% if request.user == post.author %}
+                <a class="btn btn-danger" href="{% url 'delete_post' post_id=post.id %}" role="button">Delete Post</a>
+            {% endif %}
+            
+            <div class="card card-body">
+                {% for comment in post.comment_set.all %}
+                    <h2>{{ comment.author }}</h2>
+                    <p>{{ comment.date }}</p>
+                    <p>{{ comment.text }}</p>
+                {% endfor %}
+            </div>
+
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#createComment{{ post.id }}" role="button" aria-expanded="false" aria-controls="createPost">
+                Add Comment
+            </a>
+
+            <div class="collapse" id="createComment{{ post.id }}">
+                <div class="card card-body">
+                    <form action="{% url 'add_comment' post_id=post.id %}" method="POST" class="form">
+                        {% csrf_token %}
+                    
+                        {% bootstrap_form add_comment_form %}
+                    
+                        {% bootstrap_button button_type="submit" content="OK" %}
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

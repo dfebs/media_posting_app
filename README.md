@@ -11,9 +11,9 @@ This repository is a practice application that is under construction. It is an a
 - [x] Edit own user profile
 - [x] Follow users and see only their posts
 - [x] Add follow button to user list
-
+- [x] Encourage user that isn't following users to follow users (perhaps use a jumbotron, cause jumbotrons are cool **Edit: A jumbotron was used**)
 ## Features planned
-- [ ] Encourage user that isn't following users to follow users (perhaps use a jumbotron, cause jumbotrons are cool)
+
 - [ ] Make reactions on posts (ideally with fetch)
 - [ ] Full email authentication
 - [ ] Make things look nicer using bootstrap's layout system
