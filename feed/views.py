@@ -6,11 +6,11 @@ from django.contrib import messages
 
 from .models import Post
 from .forms import AddPostForm, AddCommentForm
+from .lib import aggregrate_tailored_posts
 
+@login_required
 def feed(request):
-    # Get all posts for now. TODO: Make posts only show for who you're following
-    posts = Post.objects.all().order_by('-date')
-
+    posts = aggregrate_tailored_posts(request)
     add_post_form = AddPostForm()
     add_comment_form = AddCommentForm()
     return render(request, 'feed/feed.html', { 

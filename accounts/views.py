@@ -20,8 +20,8 @@ def profile(request, name):
 
     try:
         follow_relationship = UserFollowing.objects.get(
-            follower=profile.user, 
-            following=request.user
+            follower=request.user, 
+            following=profile.user
         )
     except UserFollowing.DoesNotExist:
         follow_relationship = None
@@ -30,7 +30,7 @@ def profile(request, name):
         'profile': profile,
         'viewing_username': viewing_username,
         'follow_relationship': follow_relationship
-        })
+    })
 
 @login_required
 def edit_profile(request):
@@ -49,7 +49,6 @@ def edit_profile(request):
     
     return render(request, 'accounts/edit_profile.html', { 'form': form })
 
-
 def log_out(request):
     logout(request)
     messages.success(request, 'You have successfully logged out.')
@@ -57,7 +56,7 @@ def log_out(request):
 
 def follow_user(request, user_id):
     user_to_follow = get_object_or_404(User, pk=user_id)
-    user_following = UserFollowing(following=request.user, follower=user_to_follow)
+    user_following = UserFollowing(following=user_to_follow, follower=request.user)
     user_following.save()
     messages.success(request, f'You now follow { user_to_follow.username }')
     return redirect(reverse('profile', kwargs={ 

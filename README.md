@@ -9,22 +9,24 @@ This repository is a practice application that is under construction. It is an a
 - [x] See all listed users
 - [x] See user profiles
 - [x] Edit own user profile
+- [x] Follow users and see only their posts
 
 ## Features planned
-- [ ] Follow users and see only their posts
-- [ ] Make reactions on posts (ideally with ajax)
+- [ ] Add follow button to user list
+- [ ] Make reactions on posts (ideally with fetch)
 - [ ] Full email authentication
 - [ ] Make things look nicer using bootstrap's layout system
 - [ ] Automated testing
 
 ## Nice to haves
+- [ ] Sidebar that appears automatically on desktop, hamburger menu on mobile
 - [ ] Have feed update on-the-fly when a different user makes a post
 - [ ] Lazy loading posts
 
 ## Instructions for running locally
-1. Creating a virtual environment and activating it
-2. Installing the dependencies in the requirements.txt `python -m pip install -r requirements.txt`
-3. Migrating with `python manage.py migrate` so that the database is functional
-4. Running the django app with `python manage.py runserver`.
+1. Create a virtual environment and activate it
+2. Install the dependencies in the requirements.txt `python -m pip install -r requirements.txt`
+3. Migrate with `python manage.py migrate` so that the database is functional
+4. Run the django app with `python manage.py runserver`.
 
 
