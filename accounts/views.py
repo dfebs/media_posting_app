@@ -10,7 +10,16 @@ from .models import UserProfile, User, UserFollowing
 
 def users(request):
     profiles = UserProfile.objects.all()
-    return render(request, 'accounts/users.html', {'profiles': profiles})
+    user_relationships = request.user.following.all()
+
+    users_following = []
+    for relationship in user_relationships:
+        users_following.append(relationship.following)
+    
+    return render(request, 'accounts/users.html', {
+        'profiles': profiles, 
+        'users_following': users_following
+        })
 
 def profile(request, name):
     # TODO construct profile.html and pass in values
@@ -68,8 +77,8 @@ def follow_user(request, user_id):
 def unfollow_user(request, user_id):
     user_to_unfollow = get_object_or_404(User, pk=user_id)
     user_relationship = get_object_or_404(UserFollowing, 
-                                            follower=user_to_unfollow, 
-                                            following=request.user)
+                                            follower=request.user, 
+                                            following=user_to_unfollow)
     user_relationship.delete()
     messages.success(request, f'You have stopped following {user_to_unfollow.username}')
     return redirect(reverse('profile', kwargs={

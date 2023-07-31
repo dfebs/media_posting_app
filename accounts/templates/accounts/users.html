@@ -6,14 +6,17 @@
 <div class="card w-50">
     <img class="card-img-top" src="{{ profile.picture.url }}" alt="{{ profile.user.username }} profile picture" style="max-width:256px; max-height:256;" />
     <div class="card-body">
-        <div class="card-title">
-            <a href="{% url 'profile' name=profile.user.username %}">
-                {{ profile.user.username }}
-            </a>
-        </div>
-        <div class="card-text">
-            {{ profile.description }}
-        </div>
+        <a class="card-title" href="{% url 'profile' name=profile.user.username %}">
+            {{ profile.user.username }}
+        </a>
+
+        <p class="card-text">{{ profile.description }}</p>
+
+        {% if profile.user not in users_following %}
+            <a class="btn btn-primary" href="{% url 'follow_user' user_id=profile.user.id %}" role="button">Follow</a>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'unfollow_user' user_id=profile.user.id %}" role="button">Unfollow</a>
+        {% endif %}
     </div>
 </div>
 {% endfor %}
