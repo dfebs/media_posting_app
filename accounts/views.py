@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm, ProfileForm
 from .models import UserProfile, User, UserFollowing
+from feed.models import Comment
 
 
 def users(request):
@@ -22,10 +23,11 @@ def users(request):
         })
 
 def profile(request, name):
-    # TODO construct profile.html and pass in values
     user = get_object_or_404(User, username=name)
     profile = get_object_or_404(UserProfile, user=user)
     viewing_username = request.user.username
+
+    posts = user.post_set.all().order_by('-date')
 
     try:
         follow_relationship = UserFollowing.objects.get(
@@ -38,7 +40,8 @@ def profile(request, name):
     return render(request, 'accounts/profile.html', {
         'profile': profile,
         'viewing_username': viewing_username,
-        'follow_relationship': follow_relationship
+        'follow_relationship': follow_relationship,
+        'posts': posts
     })
 
 @login_required

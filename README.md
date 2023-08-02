@@ -13,16 +13,18 @@ This repository is a practice application that is under construction. It is an a
 - [x] Add follow button to user list
 - [x] Encourage user that isn't following users to follow users (perhaps use a jumbotron, cause jumbotrons are cool **Edit: A jumbotron was used**)
 ## Features planned
-
 - [ ] Make reactions on posts (ideally with fetch)
 - [ ] Full email authentication
 - [ ] Make things look nicer using bootstrap's layout system
-- [ ] Automated testing
+- [ ] Product Level testing (probably with selenium)
+- [ ] Unit Testing
 
 ## Nice to haves
 - [ ] Sidebar that appears automatically on desktop, hamburger menu on mobile
 - [ ] Have feed update on-the-fly when a different user makes a post
 - [ ] Lazy loading posts
+- [ ] Make template components more reusable. Currently, the feed and profiles have the same post list but both have to be updated separately. [This may be of use.](https://stackoverflow.com/questions/9472034/how-to-make-a-reusable-template-in-django)
+- [ ] Use a modal to ask people if they're sure they want to delete a post
 
 ## Instructions for running locally
 1. Create a virtual environment and activate it

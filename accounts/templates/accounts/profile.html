@@ -1,23 +1,58 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <img class="card-img-top" src="{{ profile.picture.url }}" alt="{{ profile.user.username }} profile picture" />
+                <div class="card-body">
+                    <h1 class="card-title">{{ profile.user.username }}</h1>
+                    <p class="card-text">Date Joined: {{ profile.user.date_joined }}</p>
+                    <p class="card-text">{{ profile.description }}</p>
+                    {% if viewing_username == profile.user.username  %}
+                        <a class="btn btn-primary" href="{% url 'edit_profile' %}" role="button">Edit Profile</a>
+                    {% else %}
+                        {% if not follow_relationship %}
+                            <a class="btn btn-primary" href="{% url 'follow_user' user_id=profile.user.id %}" role="button">Follow</a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'unfollow_user' user_id=profile.user.id %}" role="button">Unfollow</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
-    {% load static %}
-    <!-- TODO fix issue where default profile picture doesnt show up. Maybe have new random image created for profiles -->
-    <img src="{{ profile.picture.url }}" alt="{{ profile.user.username }} profile picture" style="max-width:480px; max-height:480px;" />
-    <h1>{{ profile.user.username }}</h1>
-    <p>Date Joined: {{ profile.user.date_joined }}</p>
-    <p>{{ profile.description }}</p>
-
-    {% if viewing_username == profile.user.username  %}
-        <a class="btn btn-primary" href="{% url 'edit_profile' %}" role="button">Edit Profile</a>
-    {% else %}
-            {% if not follow_relationship %}
-                <a class="btn btn-primary" href="{% url 'follow_user' user_id=profile.user.id %}" role="button">Follow</a>
+        <div class="col-8">
+            {% if not posts %}
+                <h1 class="d-flex justify-content-center">{{ profile.user.username }} has no posts</h1>
             {% else %}
-                <a class="btn btn-primary" href="{% url 'unfollow_user' user_id=profile.user.id %}" role="button">Unfollow</a>
+            <h1 class="d-flex justify-content-center">Posts by {{ profile.user.username }} </h1>
             {% endif %}
-    {% endif %}
-    
+            {% for post in posts %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <img src="{{ post.image.url }}" alt="Post Image" style="max-width:480px; max-height:480px;" />
+                        <h2><a href="{% url 'profile' name=post.author.username %}">{{ post.author.username }}</a></h2>
+                        <p>{{ post.date }}</p>
+                        <p>{{ post.text }}</p>
+                        {% if request.user == post.author %}
+                            <a class="btn btn-danger" href="{% url 'delete_post' post_id=post.id %}" role="button">Delete Post</a>
+                        {% endif %}
+                        {% for comment in post.comment_set.all %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2><a href="{% url 'profile' name=comment.author.username %}">{{ comment.author }}</a></h2>
+                                    <p>{{ comment.date }}</p>
+                                    <p>{{ comment.text }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

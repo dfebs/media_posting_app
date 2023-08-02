@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from .models import Post
 from .forms import AddPostForm, AddCommentForm
-from .lib import aggregrate_tailored_posts
+from lib.helpers import aggregrate_tailored_posts
 
 @login_required
 def feed(request):
