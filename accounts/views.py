@@ -49,7 +49,7 @@ def edit_profile(request):
     user_profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
-        if form.is_valid(): # TODO enforce image sizes
+        if form.is_valid():
             profile_to_edit = form.save(commit=False)
             profile_to_edit.user = request.user
             profile_to_edit.save()
@@ -68,17 +68,31 @@ def log_out(request):
 
 def follow_user(request, user_id):
     user_to_follow = get_object_or_404(User, pk=user_id)
+
+    if user_to_follow == request.user:
+        messages.error(request, 'You cannot follow yourself you silly goose!')
+        return redirect(reverse('profile', kwargs={ 
+        'name': user_to_follow.username 
+    }))
+
+    # TODO diallow following if already following
+
     user_following = UserFollowing(following=user_to_follow, follower=request.user)
     user_following.save()
     messages.success(request, f'You now follow { user_to_follow.username }')
     return redirect(reverse('profile', kwargs={ 
         'name': user_to_follow.username 
     }))
-    # TODO consider fail cases here. simple redirect and message for trying to re-follow
-    # TODO Make sure users can't follow themselves
 
 def unfollow_user(request, user_id):
     user_to_unfollow = get_object_or_404(User, pk=user_id)
+    
+    if user_to_unfollow == request.user:
+        messages.error(request, 'You cannot unfollow yourself you silly goose!')
+        return redirect(reverse('profile', kwargs={
+        'name': user_to_unfollow.username 
+    }))
+
     user_relationship = get_object_or_404(UserFollowing, 
                                             follower=request.user, 
                                             following=user_to_unfollow)
@@ -101,7 +115,7 @@ def register(request):
                 username=request.POST['username'], 
                 password=request.POST['password1']
             )
-            login(request, new_user) # TODO create a user profile model on new register
+            login(request, new_user)
             profile = UserProfile(
                 user=new_user, 
                 description='This is the default bio',

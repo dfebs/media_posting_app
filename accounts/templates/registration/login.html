@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
-  {% block content %}
-  <div class="container">
-    <h1>Login</h1>
-    <form action="{% url 'login' %}" method="POST" class="form">
-      {% csrf_token %}
-    
-      {% bootstrap_form form %}
-    
-      {% bootstrap_button button_type="submit" content="OK" %}
-    
-    </form>
-    <a href="{% url 'register' %}">New to the site? Click here to register.</a>
-  </div>
-  {% endblock %}
+{% block content %}
+  <h1>Login</h1>
+  <form action="{% url 'login' %}" method="POST" class="form">
+    {% csrf_token %}
+  
+    {% bootstrap_form form %}
+  
+    {% bootstrap_button button_type="submit" content="OK" %}
+  
+  </form>
+  <a href="{% url 'register' %}">New to the site? Click here to register.</a>
+{% endblock %}

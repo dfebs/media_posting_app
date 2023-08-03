@@ -1,28 +1,32 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block content %}
-<div class="container">
-    <div class="row">
+
+<div class="row-12">
+    <h1 class="d-flex justify-content-center">Users</h1>
+</div>
+<div class="row">
 {% for profile in profiles %}
-        <div class="col-3 mb-4">
-            <div class="card" style="height: 100%">
-                <img class="card-img-top" src="{{ profile.picture.url }}" alt="{{ profile.user.username }} profile picture" />
-                <div class="card-body">
-                    <a class="card-title" href="{% url 'profile' name=profile.user.username %}">
-                        {{ profile.user.username }}
-                    </a>
-            
-                    <p class="card-text">{{ profile.description }}</p>
-            
+    <div class="col-md-3 col-sm-12 mb-4">
+        <div class="card" style="height: 100%">
+            <a href="{% url 'profile' name=profile.user.username %}"><img class="card-img-top" src="{{ profile.picture.url }}" alt="{{ profile.user.username }} profile picture" /></a>
+            <div class="card-body">
+                <a class="card-title" href="{% url 'profile' name=profile.user.username %}">
+                    {{ profile.user.username }}
+                </a>
+        
+                <p class="card-text">{{ profile.description }}</p>
+                {% if not profile.user == request.user %}
                     {% if profile.user not in users_following %}
                         <a class="btn btn-primary" href="{% url 'follow_user' user_id=profile.user.id %}" role="button">Follow</a>
                     {% else %}
                         <a class="btn btn-primary" href="{% url 'unfollow_user' user_id=profile.user.id %}" role="button">Unfollow</a>
                     {% endif %}
-                </div>
+                {% endif %}
             </div>
         </div>
-{% endfor %}
     </div>
+{% endfor %}
 </div>
+
 {% endblock %}

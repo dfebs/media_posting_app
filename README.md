@@ -13,6 +13,7 @@ This repository is a practice application that is under construction. It is an a
 - [x] Add follow button to user list
 - [x] Encourage user that isn't following users to follow users (perhaps use a jumbotron, cause jumbotrons are cool **Edit: A jumbotron was used**)
 ## Features planned
+- [ ] Be able to delete comments
 - [ ] Make reactions on posts (ideally with fetch)
 - [ ] Full email authentication
 - [ ] Make things look nicer using bootstrap's layout system
