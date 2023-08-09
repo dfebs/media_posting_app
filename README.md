@@ -12,7 +12,7 @@ This repository is a practice application that is under construction. It is an a
 - [x] Follow users and see only their posts
 - [x] Add follow button to user list
 - [x] Encourage user that isn't following users to follow users (perhaps use a jumbotron, cause jumbotrons are cool **Edit: A jumbotron was used**)
-- [x] Make things look nicer using bootstrap's layout system
+- [x] Make things look nicer using bootstrap's layout system (All layouts can be better, but I am happy with the layout I created. It even supports mobile!)
 ## Features planned
 - [ ] Be able to delete comments
 - [ ] Make reactions on posts (ideally with fetch)

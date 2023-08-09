@@ -8,7 +8,7 @@ from .forms import RegistrationForm, ProfileForm
 from .models import UserProfile, User, UserFollowing
 from feed.models import Comment
 
-
+@login_required
 def users(request):
     profiles = UserProfile.objects.all()
     user_relationships = request.user.following.all()
@@ -22,6 +22,7 @@ def users(request):
         'users_following': users_following
         })
 
+@login_required
 def profile(request, name):
     user = get_object_or_404(User, username=name)
     profile = get_object_or_404(UserProfile, user=user)
@@ -61,11 +62,13 @@ def edit_profile(request):
     
     return render(request, 'accounts/edit_profile.html', { 'form': form })
 
+@login_required
 def log_out(request):
     logout(request)
     messages.success(request, 'You have successfully logged out.')
     return redirect(reverse('feed'))
 
+@login_required
 def follow_user(request, user_id):
     user_to_follow = get_object_or_404(User, pk=user_id)
 
@@ -84,6 +87,7 @@ def follow_user(request, user_id):
         'name': user_to_follow.username 
     }))
 
+@login_required
 def unfollow_user(request, user_id):
     user_to_unfollow = get_object_or_404(User, pk=user_id)
     
